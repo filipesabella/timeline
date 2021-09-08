@@ -37,11 +37,11 @@ export const App = () => {
           key={b.label}
           label={b.label}
           options={b.options || null} />)}
+        <button className="dayStart">Day Start</button>
+        <button className="dayEnd">Day End</button>
       </div>
       <div className="globalActions">
         <button className="add">Add</button>
-        <button className="dayStart">Day Start</button>
-        <button className="dayEnd">Day End</button>
       </div>
     </div>
   </div>;
