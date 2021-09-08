@@ -1,22 +1,25 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { ActivityButton } from './ActivityButton';
 
 export const App = () => {
   const data = {
     config: {
       buttons: [{
-        label: 'water'
+        label: 'bad thought'
       }, {
         label: 'exercise',
         options: ['back', 'chest', 'legs']
       }, {
-        label: 'cook'
+        label: 'running'
       }, {
-        label: 'water'
+        label: 'food'
       }, {
-        label: 'exercise'
+        label: 'wank'
       }, {
-        label: 'cook'
+        label: 'poop'
+      }, {
+        label: 'programmed'
       },]
     },
     events: [],
@@ -30,10 +33,27 @@ export const App = () => {
       .forEach(e => e.classList.remove('shown'));
   };
 
+  useEffect(() => {
+    const container = document.querySelector('.main .buttons')!;
+    const maxHeight = document.body.clientHeight;
+
+    const currentHeight =
+      parseInt(
+        getComputedStyle(document.querySelector('.main .buttons button')!)
+          .height);
+
+    let count = 0;
+    while (container.clientHeight < maxHeight && count++ < 100) {
+      container.querySelectorAll('button')
+        .forEach(e => e.style.height = `${currentHeight + count}px`);
+    }
+  }, []);
+
   return <div id="app">
     <div className="main">
       <div className="buttons">
         {data.config.buttons.map(b => <ActivityButton
+          key={b.label}
           label={b.label}
           options={b.options || null} />)}
       </div>
