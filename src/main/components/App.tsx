@@ -2,6 +2,27 @@ import * as React from 'react';
 import { ActivityButton } from './ActivityButton';
 
 export const App = () => {
+  const data = {
+    config: {
+      buttons: [{
+        label: 'water'
+      }, {
+        label: 'exercise',
+        options: ['back', 'chest', 'legs']
+      }, {
+        label: 'cook'
+      }, {
+        label: 'water'
+      }, {
+        label: 'exercise'
+      }, {
+        label: 'cook'
+      },]
+    },
+    events: [],
+  };
+
+
   const tmp = () => {
     document.querySelectorAll('.activityButtonContextMenu')
       .forEach(e => e.classList.remove('shown'));
@@ -12,14 +33,15 @@ export const App = () => {
   return <div id="app">
     <div className="main">
       <div className="buttons">
-        <ActivityButton label="water" action={() => { }} />
-        <ActivityButton label="exercised" action={() => { }} />
-        <ActivityButton label="cooked" action={() => { }} />
-        <ActivityButton label="water" action={() => { }} />
-        <ActivityButton label="exercised" action={() => { }} />
-        <ActivityButton label="cooked" action={() => { }} />
+        {data.config.buttons.map(b => <ActivityButton
+          label={b.label}
+          options={b.options || null} />)}
       </div>
-      <button className="add">Add</button>
+      <div className="globalActions">
+        <button className="add">Add</button>
+        <button className="dayStart">Day Start</button>
+        <button className="dayEnd">Day End</button>
+      </div>
     </div>
     <div className="overlay"
       onClick={tmp}></div>

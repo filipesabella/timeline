@@ -3,10 +3,10 @@ import { useState } from 'react';
 
 interface Props {
   label: string;
-  action: () => void;
+  options: string[] | null;
 }
 
-export const ActivityButton = ({ label, action }: Props) => {
+export const ActivityButton = ({ label }: Props) => {
   const [timeoutId, setTimeoutId] = useState(0);
   const [wasLongPress, setWasLongPress] = useState(false);
 
@@ -24,7 +24,7 @@ export const ActivityButton = ({ label, action }: Props) => {
   const touchEnd = () => {
     clearTimeout(timeoutId);
     setWasLongPress(false);
-    !wasLongPress && action();
+    !wasLongPress && null; // TODO perform single-click action
   };
 
   return <button
