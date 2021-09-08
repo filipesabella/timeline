@@ -30,7 +30,7 @@ export const api = {
     // read before write 😬
     const data = await api.load();
     data.events.push({
-      isoDate: new Date().toISOString(),
+      isoDate: toIsoString(new Date()),
       label,
       metadata: option || null,
     });
@@ -61,4 +61,20 @@ async function store(content: Data): Promise<void> {
   }
 }
 
-(window as any).api = api;
+function toIsoString(date: Date) {
+  const tzo = -date.getTimezoneOffset();
+  const tzoDifference = tzo >= 0 ? '+' : '-';
+  const pad = (n: number) => {
+    const normalised = Math.floor(Math.abs(n));
+    return String(normalised).padStart(2, '0');
+  };
+
+  return `${date.getFullYear()}-` +
+    `${pad(date.getMonth() + 1)}-` +
+    `${pad(date.getDate())}T` +
+    `${pad(date.getHours())}:` +
+    `${pad(date.getMinutes())}:` +
+    `${pad(date.getSeconds())}` +
+    `${tzoDifference}${pad(tzo / 60)}:` +
+    `${pad(tzo % 60)}`;
+}
