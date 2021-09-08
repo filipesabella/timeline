@@ -26,19 +26,10 @@ export const App = () => {
   };
 
   useEffect(() => {
-    const container = document.querySelector('.main .buttons')!;
+    const container = document.querySelector<HTMLDivElement>('.main .buttons')!;
     const maxHeight = document.body.clientHeight;
 
-    const currentHeight =
-      parseInt(
-        getComputedStyle(document.querySelector('.activityButton')!)
-          .height);
-
-    let count = 0;
-    while (container.clientHeight < maxHeight && count++ < 100) {
-      container.querySelectorAll<HTMLDivElement>('.activityButton')
-        .forEach(e => e.style.height = `${currentHeight + count}px`);
-    }
+    container.style.minHeight = `${maxHeight}px`;
   }, []);
 
   return <div id="app">
