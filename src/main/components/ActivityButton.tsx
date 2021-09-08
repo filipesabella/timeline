@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import '../../style/ActivityButton.less';
+import { ActivityContext } from './ActionContext';
 
 interface Props {
   label: string;
@@ -9,9 +10,8 @@ interface Props {
 
 export const ActivityButton = ({ label, options }: Props) => {
   const [showContext, setShowContext] = useState(false);
-  const onClick = () => {
-    setShowContext(true);
-  };
+
+  const onClick = () => setShowContext(true);
 
   useEffect(() => {
     const maxHeight = Math.min(document.documentElement.clientHeight,
@@ -27,18 +27,9 @@ export const ActivityButton = ({ label, options }: Props) => {
 
   return <div className="activityButton">
     <button onClick={onClick}>{label}</button>
-    <div className={`context ${showContext ? 'shown' : 'hidden'}`}>
-      <div className="actions">
-        {!options && <button>Confirm</button>}
-        {options && options.map(o =>
-          <button key={o}>{o}</button>)}
-      </div>
-      <div className="otherActions">
-        <button>Edit</button>
-        <button>Move Up</button>
-        <button>Add at different time</button>
-        <button onClick={_ => setShowContext(false)}>Back</button>
-      </div>
-    </div>
+    <ActivityContext
+      options={options}
+      show={showContext}
+      hide={() => setShowContext(false)} />
   </div>;
 };
