@@ -14,9 +14,8 @@ export const ActivityButton = ({ label, options }: Props) => {
 
   const save = (option?: string) => {
     api.record(label, option);
+    setShowContext(false);
   };
-
-  const onClick = () => setShowContext(true);
 
   useEffect(() => {
     const maxHeight = Math.min(document.documentElement.clientHeight,
@@ -31,7 +30,7 @@ export const ActivityButton = ({ label, options }: Props) => {
   }, [showContext]);
 
   return <div className="activityButton">
-    <button onClick={onClick}>{label}</button>
+    <button onClick={_ => setShowContext(true)}>{label}</button>
     <ActivityContext
       options={options}
       save={save}

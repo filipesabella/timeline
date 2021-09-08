@@ -16,42 +16,4 @@ body {
   max-width: 40em;
   margin: auto;
   background: var(--app-bg-color);
-
-  .main {
-    display: flex;
-    flex-direction: column;
-
-    button {
-      margin: 0;
-      border: none;
-      font-size: 1.5em;
-      background: var(--button-bg-color);
-      color: var(--text-color);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: '-';
-    }
-
-    .buttons {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      row-gap: .5em;
-
-      >button,
-      .activityButton {
-        flex: 1;
-      }
-    }
-
-    .globalActions {
-      margin-top: 2em;
-      display: flex;
-      flex-direction: column;
-
-      button {
-        background: var(--accent-bg-color);
-      }
-    }
-  }
 }

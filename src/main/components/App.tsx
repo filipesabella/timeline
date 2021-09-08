@@ -1,39 +1,26 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import '../../style/App.less';
+import { api } from '../api';
 import { ActivityButton } from './ActivityButton';
 
 export const App = () => {
-  const data = {
-    config: {
-      buttons: [{
-        label: 'bad thought'
-      }, {
-        label: 'exercise',
-        options: ['back', 'chest', 'legs']
-      }, {
-        label: 'running'
-      }, {
-        label: 'food'
-      }, {
-        label: 'wank'
-      }, {
-        label: 'poop'
-      }, {
-        label: 'programmed'
-      },]
-    },
-    events: [],
-  };
+  const [data, setData] = useState(null as any);
+
+  useEffect(() => {
+    api.load().then(setData);
+  }, []);
 
   useEffect(() => {
     const maxHeight = Math.min(document.documentElement.clientHeight,
       window.innerHeight || Number.MAX_SAFE_INTEGER);
     document.querySelectorAll<HTMLDivElement>('.main .buttons')
       .forEach(e => e.style.minHeight = `${maxHeight}px`);
-  }, []);
+  }, [data]);
 
   return <div id="app">
-    <div className="main">
+    {!data && <div>Loading...</div>}
+    {data && <div className="main">
       <div className="buttons">
         {data.config.buttons.map(b => <ActivityButton
           key={b.label}
@@ -43,8 +30,9 @@ export const App = () => {
         <button className="dayEnd">Day End</button>
       </div>
       <div className="globalActions">
-        <button className="add">Add</button>
+        <button>Add</button>
+        <button>Settings</button>
       </div>
-    </div>
+    </div>}
   </div>;
 };
