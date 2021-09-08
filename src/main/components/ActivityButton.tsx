@@ -14,7 +14,10 @@ export const ActivityButton = ({ label, action }: Props) => {
     setTimeoutId(setTimeout(() => {
       setWasLongPress(true);
 
-      // todo show popup (Insert At Different Time | Edit)
+      document.querySelectorAll('.activityButtonContextMenu')
+        .forEach(e => e.classList.add('shown'));
+      document.querySelectorAll('.overlay')
+        .forEach(e => e.classList.add('shown'));
     }, 1000));
   };
 
@@ -22,9 +25,6 @@ export const ActivityButton = ({ label, action }: Props) => {
     clearTimeout(timeoutId);
     setWasLongPress(false);
     !wasLongPress && action();
-
-    document.querySelectorAll('.activityButtonContextMenu')
-      .forEach(e => e.classList.toggle('closed'));
   };
 
   return <button

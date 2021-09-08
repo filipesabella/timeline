@@ -49,10 +49,10 @@ body {
     border-top: .4em solid var(--app-bg-color);
 
     transition: bottom .4s;
-    bottom: 0;
+    bottom: -100%;
 
-    &.closed {
-      bottom: -100%;
+    &.shown {
+      bottom: 0;
     }
 
     button {
@@ -62,6 +62,20 @@ body {
       font-size: 1.5em;
       background: var(--app-bg-color);
       color: var(--text-color);
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .5);
+    display: none;
+
+    &.shown {
+      display: block;
     }
   }
 }
