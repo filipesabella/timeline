@@ -2,7 +2,7 @@ import '@fontsource/barlow';
 import 'modern-css-reset';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import '../style/main.css';
+import '../style/main.less';
 import { App } from './components/App';
 
 ReactDOM.render(
