@@ -33,7 +33,6 @@ export const App = () => {
   }, []);
 
   return <div id="app">
-    <div id="ta" style={{ position: 'fixed', bottom: 0, backgroundColor: 'white' }}></div>
     <div className="main">
       <div className="buttons">
         {data.config.buttons.map(b => <ActivityButton
