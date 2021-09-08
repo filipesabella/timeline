@@ -22,6 +22,9 @@ export const ActivityButton = ({ label, action }: Props) => {
     clearTimeout(timeoutId);
     setWasLongPress(false);
     !wasLongPress && action();
+
+    document.querySelectorAll('.activityButtonContextMenu')
+      .forEach(e => e.classList.toggle('closed'));
   };
 
   return <button

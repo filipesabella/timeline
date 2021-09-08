@@ -16,23 +16,52 @@ body {
   max-width: 20em;
   margin: auto;
   background: var(--app-bg-color);
-  display: flex;
-  flex-direction: column;
 
-  button {
-    margin: 0;
-    margin-bottom: .25em;
-    border: none;
-    font-size: 2em;
-    background: var(--button-bg-color);
-    color: var(--text-color);
-  }
-
-  .buttons {
-    flex: 1;
+  .main {
     display: flex;
     flex-direction: column;
+
+    button {
+      margin: 0;
+      margin-bottom: .25em;
+      border: none;
+      font-size: 2em;
+      background: var(--button-bg-color);
+      color: var(--text-color);
+    }
+
+    .buttons {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .add {}
   }
 
-  .add {}
+  .activityButtonContextMenu {
+    background: var(--button-bg-color);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    width: 100%;
+    padding: 1em;
+    border-top: .4em solid var(--app-bg-color);
+
+    transition: bottom .4s;
+    bottom: 0;
+
+    &.closed {
+      bottom: -100%;
+    }
+
+    button {
+      margin: 0;
+      margin-bottom: .25em;
+      border: none;
+      font-size: 1.5em;
+      background: var(--app-bg-color);
+      color: var(--text-color);
+    }
+  }
 }
