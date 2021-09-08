@@ -13,7 +13,8 @@ export const ActivityButton = ({ label, options }: Props) => {
   };
 
   useEffect(() => {
-    const maxHeight = document.body.clientHeight;
+    const maxHeight = Math.min(document.documentElement.clientHeight,
+      window.innerHeight || Number.MAX_SAFE_INTEGER);
     document.querySelectorAll<HTMLDivElement>('.activityButton .actions')
       .forEach(e => e.style.minHeight = `${maxHeight}px`);
   }, []);

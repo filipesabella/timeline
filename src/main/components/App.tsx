@@ -26,8 +26,10 @@ export const App = () => {
   };
 
   useEffect(() => {
+    const maxHeight = Math.min(document.documentElement.clientHeight,
+      window.innerHeight || Number.MAX_SAFE_INTEGER);
     document.querySelectorAll<HTMLDivElement>('.main .buttons')
-      .forEach(e => e.style.minHeight = `${document.body.clientHeight}px`);
+      .forEach(e => e.style.minHeight = `${maxHeight}px`);
   }, []);
 
   return <div id="app">
