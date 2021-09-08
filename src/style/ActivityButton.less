@@ -1,0 +1,52 @@
+.activityButton {
+  >button {
+    width: 100%;
+    height: 100%;
+  }
+
+  .context {
+    position: fixed;
+    transition: left .1s;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 100%;
+    background: var(--app-bg-color);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+    button {
+      width: 100%;
+    }
+
+    &.shown {
+      left: 0;
+    }
+
+    .actions,
+    .otherActions {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .actions {
+      flex: 1;
+      gap: 1em;
+      margin-bottom: 1em;
+
+      button {
+        flex: 1;
+      }
+    }
+
+    .otherActions {
+      font-size: .6em;
+      gap: .5em;
+
+      button {
+        background: var(--accent-bg-color);
+      }
+    }
+  }
+}

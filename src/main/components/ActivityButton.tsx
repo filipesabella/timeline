@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import '../../style/ActivityButton.less';
 
 interface Props {
   label: string;
