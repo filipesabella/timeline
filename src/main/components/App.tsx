@@ -25,6 +25,7 @@ export const App = () => {
       onClick={tmp}></div>
     <div className="activityButtonContextMenu closed">
       <button>Edit</button>
+      <button>Move Up</button>
       <button>Add at different time</button>
     </div>
   </div>;
