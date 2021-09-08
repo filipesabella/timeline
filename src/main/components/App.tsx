@@ -25,31 +25,24 @@ export const App = () => {
     events: [],
   };
 
-
-  const tmp = () => {
-    document.querySelectorAll('.activityButtonContextMenu')
-      .forEach(e => e.classList.remove('shown'));
-    document.querySelectorAll('.overlay')
-      .forEach(e => e.classList.remove('shown'));
-  };
-
   useEffect(() => {
     const container = document.querySelector('.main .buttons')!;
     const maxHeight = document.body.clientHeight;
 
     const currentHeight =
       parseInt(
-        getComputedStyle(document.querySelector('.main .buttons button')!)
+        getComputedStyle(document.querySelector('.activityButton')!)
           .height);
 
     let count = 0;
     while (container.clientHeight < maxHeight && count++ < 100) {
-      container.querySelectorAll('button')
+      container.querySelectorAll<HTMLDivElement>('.activityButton')
         .forEach(e => e.style.height = `${currentHeight + count}px`);
     }
   }, []);
 
   return <div id="app">
+    <div id="ta" style={{ position: 'fixed', bottom: 0, backgroundColor: 'white' }}></div>
     <div className="main">
       <div className="buttons">
         {data.config.buttons.map(b => <ActivityButton
@@ -62,13 +55,6 @@ export const App = () => {
         <button className="dayStart">Day Start</button>
         <button className="dayEnd">Day End</button>
       </div>
-    </div>
-    <div className="overlay"
-      onClick={tmp}></div>
-    <div className="activityButtonContextMenu closed">
-      <button>Edit</button>
-      <button>Move Up</button>
-      <button>Add at different time</button>
     </div>
   </div>;
 };

@@ -1,35 +1,42 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   label: string;
   options: string[] | null;
 }
 
-export const ActivityButton = ({ label }: Props) => {
-  const [timeoutId, setTimeoutId] = useState(0);
-  const [wasLongPress, setWasLongPress] = useState(false);
-
-  const touchStart = () => {
-    setTimeoutId(setTimeout(() => {
-      setWasLongPress(true);
-
-      document.querySelectorAll('.activityButtonContextMenu')
-        .forEach(e => e.classList.add('shown'));
-      document.querySelectorAll('.overlay')
-        .forEach(e => e.classList.add('shown'));
-    }, 1000));
+export const ActivityButton = ({ label, options }: Props) => {
+  const [showContext, setShowContext] = useState(false);
+  const onClick = () => {
+    setShowContext(true);
   };
 
-  const touchEnd = () => {
-    clearTimeout(timeoutId);
-    setWasLongPress(false);
-    !wasLongPress && null; // TODO perform single-click action
-  };
+  useEffect(() => {
+    const maxHeight = document.body.clientHeight;
+    document.querySelectorAll<HTMLDivElement>('.activityButton .actions')
+      .forEach(e => e.style.minHeight = `${maxHeight}px`);
+  }, []);
 
-  return <button
-    onMouseDown={touchStart}
-    onMouseUp={touchEnd}
-    onTouchStart={touchStart}
-    onTouchEnd={touchEnd}>{label}</button>;
+  useEffect(() => {
+    document.querySelectorAll<HTMLDivElement>('.activityButton .context')
+      .forEach(e => e.scrollTo(0, 0));
+  }, [showContext]);
+
+  return <div className="activityButton">
+    <button onClick={onClick}>{label}</button>
+    <div className={`context ${showContext ? 'shown' : 'hidden'}`}>
+      <div className="actions">
+        {!options && <button>Confirm</button>}
+        {options && options.map(o =>
+          <button key={o}>{o}</button>)}
+      </div>
+      <div className="otherActions">
+        <button>Edit</button>
+        <button>Move Up</button>
+        <button>Add at different time</button>
+        <button onClick={_ => setShowContext(false)}>Back</button>
+      </div>
+    </div>
+  </div>;
 };
