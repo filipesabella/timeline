@@ -33,6 +33,7 @@ export const ActivityButton = ({ label, options }: Props) => {
   return <div className="activityButton">
     <button onClick={_ => onClick()}>{label}</button>
     <ActivityContext
+      label={label}
       options={options}
       save={save}
       show={showContext} />
