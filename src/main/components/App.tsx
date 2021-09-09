@@ -24,10 +24,7 @@ export const App = () => {
       <div className="buttons">
         {config.buttons.map(b => <ActivityButton
           key={b.label}
-          label={b.label}
-          options={b.options || null} />)}
-        <button className="dayStart">Day Start</button>
-        <button className="dayEnd">Day End</button>
+          config={b} />)}
       </div>
       <div className="globalActions">
         <button>Settings</button>

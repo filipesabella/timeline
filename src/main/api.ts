@@ -5,10 +5,19 @@ interface Event {
 }
 
 export interface Config {
-  buttons: {
-    label: string;
-    options?: string[];
-  }[];
+  buttons: ButtonConfig[];
+}
+
+export interface ButtonConfig {
+  label: string;
+  options?: string[];
+  form?: FormFieldConfig[];
+}
+
+export interface FormFieldConfig {
+  label: string;
+  type: 'string' | 'boolean' | 'select' | 'select+string';
+  options?: string[] | number[];
 }
 
 const githubToken = process.env.GH_TOKEN;
@@ -24,7 +33,7 @@ export const api = {
     return JSON.parse(json.files[configFileName].content);
   },
 
-  record: async (label: string, option?: string): Promise<void> => {
+  record: async (label: string, metadata?: string): Promise<void> => {
     // read before write 😬
     const json = await load();
     const events: Event[] =
@@ -33,7 +42,7 @@ export const api = {
     events.push({
       isoDate: toIsoString(new Date()),
       label,
-      metadata: option || null,
+      metadata: metadata || null,
     });
 
     store(events);

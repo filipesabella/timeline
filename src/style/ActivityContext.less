@@ -36,5 +36,35 @@
         flex: 1;
       }
     }
+
+    .form {
+      padding: 1em;
+      display: grid;
+      grid-template-columns: [labels] minmax(auto, 1fr) [controls] 3fr;
+      grid-auto-flow: row;
+      grid-gap: 1em;
+      align-items: normal;
+
+      >label {
+        grid-column: labels;
+        white-space: nowrap;
+        flex: 1;
+      }
+
+      >input,
+      >select,
+      >.multiField {
+        grid-column: controls;
+      }
+
+      .multiField {
+        display: flex;
+        gap: 1em;
+
+        input {
+          width: 100%;
+        }
+      }
+    }
   }
 }

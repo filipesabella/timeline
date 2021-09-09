@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import '../../style/ActivityButton.less';
-import { api } from '../api';
+import { api, ButtonConfig } from '../api';
 import { ActivityContext } from './ActionContext';
+import { ActivityFormContext } from './ActionFormContext';
 
 interface Props {
-  label: string;
-  options: string[] | null;
+  config: ButtonConfig;
 }
 
-export const ActivityButton = ({ label, options }: Props) => {
+export const ActivityButton = ({ config }: Props) => {
+  const { label, options, form } = config;
+
   const [showContext, setShowContext] = useState(false);
 
   const onClick = () => {
@@ -17,8 +19,8 @@ export const ActivityButton = ({ label, options }: Props) => {
     history.pushState(null, '', `#${label}`);
   };
 
-  const save = (option?: string) => {
-    api.record(label, option);
+  const save = (metadata?: string) => {
+    api.record(label, metadata);
     history.back();
   };
 
@@ -27,15 +29,22 @@ export const ActivityButton = ({ label, options }: Props) => {
 
     window.addEventListener('hashchange', listener);
 
+    // if (label === 'Day Start') setShowContext(true);
+
     return () => window.removeEventListener('hashchange', listener);
   }, []);
 
   return <div className="activityButton">
     <button onClick={_ => onClick()}>{label}</button>
-    <ActivityContext
+    {form && <ActivityFormContext
       label={label}
-      options={options}
+      form={form}
       save={save}
-      show={showContext} />
+      show={showContext} />}
+    {!form && <ActivityContext
+      label={label}
+      options={options || null}
+      save={save}
+      show={showContext} />}
   </div>;
 };
