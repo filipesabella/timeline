@@ -12,10 +12,27 @@ interface Props {
 export const ActivityButton = ({ label, options }: Props) => {
   const [showContext, setShowContext] = useState(false);
 
+  const onClick = () => {
+    setShowContext(true);
+    history.pushState(null, '', `#${label}`);
+  };
+
   const save = (option?: string) => {
     api.record(label, option);
-    setShowContext(false);
+    history.back();
   };
+
+  useEffect(() => {
+    const listener = function() {
+      if (window.location.hash === '') setShowContext(false);
+    };
+
+    window.addEventListener('hashchange', listener);
+
+    return () => {
+      window.removeEventListener('hashchange', listener);
+    };
+  }, []);
 
   useEffect(() => {
     document.querySelectorAll<HTMLDivElement>('.activityButton .context')
@@ -23,11 +40,10 @@ export const ActivityButton = ({ label, options }: Props) => {
   }, [showContext]);
 
   return <div className="activityButton">
-    <button onClick={_ => setShowContext(true)}>{label}</button>
+    <button onClick={_ => onClick()}>{label}</button>
     <ActivityContext
       options={options}
       save={save}
-      show={showContext}
-      hide={() => setShowContext(false)} />
+      show={showContext} />
   </div>;
 };
