@@ -1,3 +1,5 @@
+import { storage } from "./storage";
+
 interface Event {
   isoDate: string;
   label: string;
@@ -20,8 +22,7 @@ export interface FormFieldConfig {
   options?: string[] | number[];
 }
 
-const githubToken = process.env.GH_TOKEN;
-const gistId = process.env.GIST_ID;
+const { gistId, githubToken } = storage.load();
 
 const configFileName = 'config';
 const eventsFileName = 'events';

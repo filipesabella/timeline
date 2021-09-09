@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import '../../style/App.less';
 import { api, Config } from '../api';
 import { ActivityButton } from './ActivityButton';
+import { Settings } from './Settings';
 
 export const App = () => {
   const [config, setConfig] = useState(null as Config | null);
@@ -20,15 +21,15 @@ export const App = () => {
 
   return <div id="app">
     {!config && <div>Loading...</div>}
-    {config && <div className="main">
-      <div className="buttons">
+    <div className="main">
+      {config && <div className="buttons">
         {config.buttons.map(b => <ActivityButton
           key={b.label}
           config={b} />)}
-      </div>
+      </div>}
       <div className="globalActions">
-        <button>Settings</button>
+        <Settings />
       </div>
-    </div>}
+    </div>
   </div>;
 };

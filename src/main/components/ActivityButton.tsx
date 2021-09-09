@@ -26,16 +26,12 @@ export const ActivityButton = ({ config }: Props) => {
 
   useEffect(() => {
     const listener = () => setShowContext(window.location.hash !== '');
-
     window.addEventListener('hashchange', listener);
-
-    // if (label === 'Day Start') setShowContext(true);
-
     return () => window.removeEventListener('hashchange', listener);
   }, []);
 
   return <div className="activityButton">
-    <button onClick={_ => onClick()}>{label}</button>
+    <button onClick={onClick}>{label}</button>
     {form && <ActivityFormContext
       label={label}
       form={form}

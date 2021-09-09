@@ -1,0 +1,52 @@
+.settings {
+  >button {
+    width: 100%;
+    background: var(--accent-bg-color);
+    padding: .5em;
+  }
+
+  .form {
+    position: fixed;
+    transition: left .1s;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 100%;
+    background: var(--app-bg-color);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+    &.shown {
+      left: 0;
+    }
+
+    >p {
+      font-size: 2em;
+      background: var(--button-bg-color-lighter);
+      margin-bottom: .25em;
+      text-align: center;
+    }
+
+    .fields {
+      padding: 1em;
+      display: grid;
+      grid-template-columns: [labels] minmax(auto, 1fr) [controls] 3fr;
+      grid-auto-flow: row;
+      grid-gap: 1em;
+      align-items: normal;
+
+      >label {
+        grid-column: labels;
+        white-space: nowrap;
+        flex: 1;
+      }
+
+      >input,
+      >select,
+      >.multiField {
+        grid-column: controls;
+      }
+    }
+  }
+}
