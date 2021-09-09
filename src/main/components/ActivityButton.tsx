@@ -34,11 +34,6 @@ export const ActivityButton = ({ label, options }: Props) => {
     };
   }, []);
 
-  useEffect(() => {
-    document.querySelectorAll<HTMLDivElement>('.activityButton .context')
-      .forEach(e => e.scrollTo(0, 0));
-  }, [showContext]);
-
   return <div className="activityButton">
     <button onClick={_ => onClick()}>{label}</button>
     <ActivityContext
