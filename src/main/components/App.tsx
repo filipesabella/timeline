@@ -30,7 +30,6 @@ export const App = () => {
         <button className="dayEnd">Day End</button>
       </div>
       <div className="globalActions">
-        <button>Add</button>
         <button>Settings</button>
       </div>
     </div>}

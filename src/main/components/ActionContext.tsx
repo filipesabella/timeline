@@ -17,9 +17,6 @@ export const ActivityContext = ({ save, show, hide, options }: Props) => {
           onClick={_ => save(o)}>{o}</button>)}
     </div>
     <div className="otherActions">
-      <button>Edit</button>
-      <button>Move Up</button>
-      <button>Add at different time</button>
       <button onClick={hide}>Back</button>
     </div>
   </div>;
