@@ -23,15 +23,11 @@ export const ActivityButton = ({ label, options }: Props) => {
   };
 
   useEffect(() => {
-    const listener = function() {
-      if (window.location.hash === '') setShowContext(false);
-    };
+    const listener = () => setShowContext(window.location.hash !== '');
 
     window.addEventListener('hashchange', listener);
 
-    return () => {
-      window.removeEventListener('hashchange', listener);
-    };
+    return () => window.removeEventListener('hashchange', listener);
   }, []);
 
   return <div className="activityButton">
