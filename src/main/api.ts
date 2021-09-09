@@ -1,45 +1,51 @@
-interface Data {
-  events: {
-    isoDate: string;
+interface Event {
+  isoDate: string;
+  label: string;
+  metadata: string | null;
+}
+
+export interface Config {
+  buttons: {
     label: string;
-    metadata: string | null;
+    options?: string[];
   }[];
-  config: {
-    buttons: {
-      label: string;
-      options?: string[];
-    }[]
-  };
 }
 
 const githubToken = process.env.GH_TOKEN;
 const gistId = process.env.GIST_ID;
 
-const fileName = 'timeline';
+const configFileName = 'config';
+const eventsFileName = 'events';
 const url = `https://api.github.com/gists/${gistId}`;
 
 export const api = {
-  load: async (): Promise<Data> => {
-    const response = await fetch(url);
-    const json = await response.json();
-    return JSON.parse(json.files[fileName].content);
-
+  loadConfig: async (): Promise<Config> => {
+    const json = await load();
+    return JSON.parse(json.files[configFileName].content);
   },
 
   record: async (label: string, option?: string): Promise<void> => {
     // read before write 😬
-    const data = await api.load();
-    data.events.push({
+    const json = await load();
+    const events: Event[] =
+      JSON.parse(json.files[eventsFileName].content || '[]');
+
+    events.push({
       isoDate: toIsoString(new Date()),
       label,
       metadata: option || null,
     });
-    store(data);
+
+    store(events);
   }
 };
 
+async function load(): Promise<any> {
+  const response = await fetch(url);
+  return await response.json();
+}
 
-async function store(content: Data): Promise<void> {
+async function store(events: Event[]): Promise<void> {
   const resp = await fetch(url, {
     method: 'PATCH',
     headers: {
@@ -48,8 +54,8 @@ async function store(content: Data): Promise<void> {
     body: JSON.stringify({
       description: '',
       files: {
-        [fileName]: {
-          content: JSON.stringify(content, null, 2)
+        [eventsFileName]: {
+          content: JSON.stringify(events, null, 2)
         }
       }
     }),

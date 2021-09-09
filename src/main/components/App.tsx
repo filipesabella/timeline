@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import '../../style/App.less';
-import { api } from '../api';
+import { api, Config } from '../api';
 import { ActivityButton } from './ActivityButton';
 
 export const App = () => {
-  const [data, setData] = useState(null as any);
+  const [config, setConfig] = useState(null as Config | null);
 
   useEffect(() => {
-    api.load().then(setData);
+    api.loadConfig().then(setConfig);
   }, []);
 
   useEffect(() => {
@@ -16,13 +16,13 @@ export const App = () => {
       window.innerHeight || Number.MAX_SAFE_INTEGER);
     document.querySelectorAll<HTMLDivElement>('.main .buttons')
       .forEach(e => e.style.minHeight = `${maxHeight}px`);
-  }, [data]);
+  }, [config]);
 
   return <div id="app">
-    {!data && <div>Loading...</div>}
-    {data && <div className="main">
+    {!config && <div>Loading...</div>}
+    {config && <div className="main">
       <div className="buttons">
-        {data.config.buttons.map(b => <ActivityButton
+        {config.buttons.map(b => <ActivityButton
           key={b.label}
           label={b.label}
           options={b.options || null} />)}
