@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "parcel src/html/index.html",
-    "build": "parcel build src/html/index.html"
+    "build": "parcel build --out-dir docs --public-url ./timeline/ src/html/index.html"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
