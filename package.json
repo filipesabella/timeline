@@ -5,7 +5,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "parcel src/html/index.html"
+    "start": "parcel src/html/index.html",
+    "build": "parcel build src/html/index.html"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
