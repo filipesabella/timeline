@@ -1,7 +1,7 @@
 set -e
 
 git checkout build
-git rebase master
+git merge master -m "Merge master"
 yarn build
 git add -A docs
 git commit -m "Release"
