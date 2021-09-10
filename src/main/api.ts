@@ -1,7 +1,9 @@
-import { storage } from "./storage";
+import { storage } from './storage';
 
 interface Event {
-  isoDate: string;
+  id: string;
+  creation_date: string;
+  event_date: string;
   label: string;
   metadata: string | null;
 }
@@ -41,7 +43,9 @@ export const api = {
       JSON.parse(json.files[eventsFileName].content || '[]');
 
     events.push({
-      isoDate: toIsoString(new Date()),
+      id: uuid(),
+      creation_date: toIsoString(new Date()),
+      event_date: toIsoString(new Date()),
       label,
       metadata: metadata || null,
     });
@@ -93,4 +97,12 @@ function toIsoString(date: Date) {
     `${pad(date.getSeconds())}` +
     `${tzoDifference}${pad(tzo / 60)}:` +
     `${pad(tzo % 60)}`;
+}
+
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 }
