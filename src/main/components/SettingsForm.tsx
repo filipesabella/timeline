@@ -22,7 +22,7 @@ export const SettingsForm = ({ show }: Props) => {
     window.location.href = window.location.href.split('#')[0];
   };
 
-  return <div className={`form ${show && 'shown'}`}>
+  return <div className={`form full-screen ${show && 'shown'}`}>
     <p>Settings</p>
     <div className="fields">
       <label>Gist ID</label>

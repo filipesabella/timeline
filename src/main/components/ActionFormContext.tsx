@@ -31,7 +31,7 @@ export const ActivityFormContext = ({ label, form, save, show }: Props) => {
     }
   };
 
-  return <div className={`context ${show ? 'shown' : 'hidden'}`}>
+  return <div className={`context full-screen ${show ? 'shown' : 'hidden'}`}>
     <p>{label}</p>
     <div className="form">
       {form.map(f => formField(f, onChange))}

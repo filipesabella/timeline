@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const ActivityContext = ({ label, options, save, show }: Props) => {
-  return <div className={`context ${show ? 'shown' : 'hidden'}`}>
+  return <div className={`context full-screen ${show ? 'shown' : 'hidden'}`}>
     <p>{label}</p>
     <div className="actions">
       {!options && <button onClick={_ => save()}>Confirm</button>}
