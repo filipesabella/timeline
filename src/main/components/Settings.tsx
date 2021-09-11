@@ -1,25 +1,37 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import '../../style/Settings.less';
-import { SettingsForm } from './SettingsForm';
+import { storage } from '../storage';
 
 export const Settings = () => {
-  const [showForm, setShowForm] = useState(false);
+  const [gistId, setGistId] = useState('');
+  const [githubToken, setGithubToken] = useState('');
 
   useEffect(() => {
-    const listener = () => setShowForm(window.location.hash !== '');
-    window.addEventListener('hashchange', listener);
-    return () => window.removeEventListener('hashchange', listener);
+    const { gistId, githubToken } = storage.load();
+    setGistId(gistId);
+    setGithubToken(githubToken);
   }, []);
 
-  const onClick = () => {
-    setShowForm(true);
-    history.pushState(null, '', '#settings');
+  const save = () => {
+    storage.store({ gistId, githubToken });
   };
 
   return <div className="settings">
-    <button onClick={onClick}>Settings</button>
-    <SettingsForm show={showForm} />
+    <p>Settings</p>
+    <div className="fields">
+      <label>Gist ID</label>
+      <input
+        type="text"
+        value={gistId}
+        onChange={e => setGistId(e.currentTarget.value)}></input>
+      <label>Github Token</label>
+      <input
+        type="text"
+        value={githubToken}
+        onChange={e => setGithubToken(e.currentTarget.value)}></input>
+    </div>
+    <button onClick={_ => save()}>Save</button>
   </div>;
 };
 
