@@ -5,8 +5,8 @@ import '../../style/Menu.less';
 export const Menu = () => {
   return <div className="menu">
     <NavLink to={'/'} exact={true}>{homeIcon}</NavLink>
-    <NavLink to={'/settings'} exact={true}>{settingsIcon}</NavLink>
     <NavLink to={'/stats'} exact={true}>{graphIcon}</NavLink>
+    <NavLink to={'/settings'} exact={true}>{settingsIcon}</NavLink>
   </div>;
 };
 

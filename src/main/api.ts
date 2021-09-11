@@ -1,6 +1,6 @@
 import { storage } from './storage';
 
-interface Event {
+export interface Event {
   id: string;
   creation_date: string;
   event_date: string;
@@ -32,16 +32,20 @@ const url = `https://api.github.com/gists/${gistId}`;
 
 export const api = {
   loadConfig: async (): Promise<Config> => {
-    const json = await load();
+    const json = await loadGist();
     return JSON.parse(json.files[configFileName].content);
+  },
+
+  loadEvents: async (): Promise<Event[]> => {
+    const json = await loadGist();
+    const events: Event[] =
+      JSON.parse(json.files[eventsFileName].content || '[]');
+    return events;
   },
 
   record: async (label: string, metadata?: string): Promise<void> => {
     // read before write 😬
-    const json = await load();
-    const events: Event[] =
-      JSON.parse(json.files[eventsFileName].content || '[]');
-
+    const events = await api.loadEvents();
     events.push({
       id: uuid(),
       creation_date: toIsoString(new Date()),
@@ -54,7 +58,7 @@ export const api = {
   }
 };
 
-async function load(): Promise<any> {
+async function loadGist(): Promise<any> {
   const response = await fetch(url);
   return await response.json();
 }
