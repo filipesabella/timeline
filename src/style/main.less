@@ -1,38 +1,29 @@
-:root {
-  --app-bg-color: hsl(150, 20%, 40%);
-  --button-bg-color: hsl(77, 25%, 70%);
-  --button-bg-color-lighter: hsl(75, 30%, 80%);
-  --accent-bg-color: hsl(25, 90%, 75%);
-  --text-color: hsl(0, 0%, 5%);
-}
-
-body {
-  font-family: 'Barlow';
-  color: var(--text-color);
-}
-
-#app {
-  height: 100vh;
-  width: 100%;
-  max-width: 40em;
-  margin: auto;
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   background: var(--app-bg-color);
 
-  .loadingAnimation {
-    width: 100%;
-    text-align: center;
+  button {
+    margin: 0;
+    border: none;
+    font-size: 1.5em;
+    background: var(--button-bg-color);
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: '-';
+  }
 
-    svg {
-      width: 2em;
+  .buttons {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    row-gap: .5em;
 
-      rect {
-        fill: var(--button-bg-color);
-      }
+    >button,
+    .activityButton {
+      flex: 1;
     }
   }
-}
-
-.full-screen {
-  max-width: 40em;
-  margin: auto;
 }
