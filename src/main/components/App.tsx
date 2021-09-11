@@ -9,7 +9,7 @@ import { Stats } from './Stats';
 export const App = () => {
   return <div id="app">
     <Switch>
-      <Route path="/" exact={true} component={Main} />
+      <Route path={['/', '/index.html']} exact={true} component={Main} />
       <Route path="/stats" exact={true} component={Stats} />
       <Route path="/settings" exact={true} component={Settings} />
     </Switch>
