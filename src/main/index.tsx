@@ -8,7 +8,7 @@ import { App } from './components/App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.BASE_PATH ?? '/'}>
       <App />
     </BrowserRouter>
   </React.StrictMode>,
