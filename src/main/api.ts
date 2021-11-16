@@ -59,12 +59,7 @@ export const api = {
 };
 
 async function loadGist(): Promise<any> {
-  const response = await fetch(url, {
-    headers: {
-      'Cache': 'no-store',
-      'Cache-Control': 'no-cache'
-    }
-  });
+  const response = await fetch(url);
   return await response.json();
 }
 
