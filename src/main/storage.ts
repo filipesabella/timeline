@@ -1,6 +1,4 @@
 export interface Settings {
-  gistId: string;
-  githubToken: string;
   supabaseUrl: string;
   supabaseKey: string;
 }
@@ -12,8 +10,6 @@ export const storage = {
     const settings = JSON.parse(
       localStorage.getItem(localStorageKey) || '{}');
     return {
-      gistId: '',
-      githubToken: '',
       supabaseUrl: '',
       supabaseKey: '',
       ...settings,

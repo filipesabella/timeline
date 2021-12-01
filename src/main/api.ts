@@ -25,11 +25,7 @@ export interface FormFieldConfig {
   options?: string[] | number[];
 }
 
-const { gistId, githubToken, supabaseUrl, supabaseKey } = storage.load();
-
-const configFileName = 'config';
-const eventsFileName = 'events';
-const url = `https://api.github.com/gists/${gistId}`;
+const { supabaseUrl, supabaseKey } = storage.load();
 
 const supabase = createClient(supabaseUrl || 'error', supabaseKey || 'error');
 
