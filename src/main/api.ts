@@ -35,58 +35,43 @@ const supabase = createClient(supabaseUrl || 'error', supabaseKey || 'error');
 
 export const api = {
   loadConfig: async (): Promise<Config> => {
-    const json = await loadGist();
-    return JSON.parse(json.files[configFileName].content);
+    const result = await supabase
+      .from('timeline_config')
+      .select('config')
+      .eq('id', 1)
+      .single();
+
+    return result.data.config;
   },
 
   loadEvents: async (): Promise<Event[]> => {
-    const json = await loadGist();
-    const events: Event[] =
-      JSON.parse(json.files[eventsFileName].content || '[]');
-    return events;
+    const result = await supabase
+      .from('timeline_events')
+      .select()
+      .order('event_date', { ascending: true });
+
+    return (result.data || []).map(row => {
+      const e: Event = {
+        id: row.id,
+        creation_date: row.creation_date,
+        event_date: row.event_date,
+        label: row.label,
+        metadata: row.metadata,
+      };
+      return e;
+    });
   },
 
   record: async (label: string, metadata?: string): Promise<void> => {
-    // read before write 😬
-    const events = await api.loadEvents();
-    events.push({
+    supabase.from('timeline_events').insert({
       id: uuid(),
       creation_date: toIsoString(new Date()),
       event_date: toIsoString(new Date()),
       label,
       metadata: metadata || null,
     });
-
-    store(events);
   }
 };
-
-async function loadGist(): Promise<any> {
-  const response = await fetch(url);
-  return await response.json();
-}
-
-async function store(events: Event[]): Promise<void> {
-  const resp = await fetch(url, {
-    method: 'PATCH',
-    headers: {
-      Authorization: `token ${githubToken}`,
-    },
-    body: JSON.stringify({
-      description: '',
-      files: {
-        [eventsFileName]: {
-          content: JSON.stringify(events, null, 2)
-        }
-      }
-    }),
-  });
-
-  if (resp.status !== 200) {
-    alert(`Error while saving ${resp.status}`);
-    throw 'Could not upload data';
-  }
-}
 
 function toIsoString(date: Date) {
   const tzo = -date.getTimezoneOffset();
