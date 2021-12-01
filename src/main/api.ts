@@ -59,7 +59,7 @@ export const api = {
   },
 
   record: async (label: string, metadata?: string): Promise<void> => {
-    supabase.from('timeline_events').insert({
+    await supabase.from('timeline_events').insert({
       id: uuid(),
       creation_date: toIsoString(new Date()),
       event_date: toIsoString(new Date()),
