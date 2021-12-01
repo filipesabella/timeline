@@ -1,6 +1,8 @@
 export interface Settings {
   gistId: string;
   githubToken: string;
+  supabaseUrl: string;
+  supabaseKey: string;
 }
 
 const localStorageKey = 'timeline_settings';
@@ -12,6 +14,8 @@ export const storage = {
     return {
       gistId: '',
       githubToken: '',
+      supabaseUrl: '',
+      supabaseKey: '',
       ...settings,
     };
   },

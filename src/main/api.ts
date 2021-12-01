@@ -1,3 +1,4 @@
+import { createClient } from '@supabase/supabase-js';
 import { storage } from './storage';
 
 export interface Event {
@@ -24,11 +25,13 @@ export interface FormFieldConfig {
   options?: string[] | number[];
 }
 
-const { gistId, githubToken } = storage.load();
+const { gistId, githubToken, supabaseUrl, supabaseKey } = storage.load();
 
 const configFileName = 'config';
 const eventsFileName = 'events';
 const url = `https://api.github.com/gists/${gistId}`;
+
+const supabase = createClient(supabaseUrl || 'error', supabaseKey || 'error');
 
 export const api = {
   loadConfig: async (): Promise<Config> => {
