@@ -44,6 +44,7 @@ export const api = {
     const result = await supabase
       .from('timeline_events')
       .select()
+      .gte('event_date', lastWeek())
       .order('event_date', { ascending: true });
 
     return (result.data || []).map(row => {
@@ -68,6 +69,12 @@ export const api = {
     });
   }
 };
+
+function lastWeek() {
+  const now = new Date();
+  now.setDate(now.getDate() - 7);
+  return toIsoString(now);
+}
 
 function toIsoString(date: Date) {
   const tzo = -date.getTimezoneOffset();
