@@ -23,8 +23,12 @@ export const Stats = () => {
 };
 
 const Event = (event: Event) => {
+  const label = event.label;
+  const text = label === 'One time event'
+    ? `OTE: ${JSON.parse(event.metadata!).Event}`
+    : label;
   return <tr key={event.id}>
-    <td>{event.label}</td>
+    <td>{text}</td>
     <td>{event.event_date}</td>
   </tr>;
 };
