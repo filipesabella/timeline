@@ -22,11 +22,14 @@ export const Stats = () => {
   </div>;
 };
 
+const specificParsers: {[key:string]: (e: Event) => string} = {
+  'One time event': (e: Event) => `OTE: ${JSON.parse(e.metadata!).Event}`,
+  'exercise': (e: Event) => `Exercise: ${e.metadata}`,
+};
+
 const Event = (event: Event) => {
   const label = event.label;
-  const text = label === 'One time event'
-    ? `OTE: ${JSON.parse(event.metadata!).Event}`
-    : label;
+  const text = specificParsers[label] ? specificParsers[label](event) : label;
   return <tr key={event.id}>
     <td>{text}</td>
     <td>{event.event_date}</td>
