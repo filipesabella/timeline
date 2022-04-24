@@ -32,6 +32,21 @@ const Event = (event: Event) => {
   const text = specificParsers[label] ? specificParsers[label](event) : label;
   return <tr key={event.id}>
     <td>{text}</td>
-    <td>{event.event_date}</td>
+    <td className="date">{formatDate(event.event_date)}</td>
   </tr>;
 };
+
+function formatDate(s: string): string {
+  const d = new Date(s);
+  return [
+    d.getFullYear(),
+    '-',
+    String(d.getMonth() + 1).padStart(2, '0'),
+    '-',
+    String(d.getDate()).padStart(2, '0'),
+    ' ',
+    String(d.getHours()).padStart(2, '0'),
+    ':',
+    String(d.getMinutes()).padStart(2, '0'),
+  ].join('');
+}
