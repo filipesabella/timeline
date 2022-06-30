@@ -25,6 +25,7 @@ export const Stats = () => {
 const specificParsers: {[key:string]: (e: Event) => string} = {
   'One time event': (e: Event) => `OTE: ${JSON.parse(e.metadata!).Event}`,
   'exercise': (e: Event) => `Exercise: ${e.metadata}`,
+  'food': (e: Event) => `Food: ${e.metadata}`,
 };
 
 const Event = (event: Event) => {
