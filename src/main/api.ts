@@ -21,8 +21,8 @@ export interface ButtonConfig {
 
 export interface FormFieldConfig {
   label: string;
-  type: 'string' | 'boolean' | 'select' | 'select+string';
-  options?: string[] | number[];
+  type: 'string' | 'boolean' | 'range' | 'range+string' | 'select' | 'select+string';
+  options?: string[] | number[] | {};
 }
 
 const { supabaseUrl, supabaseKey } = storage.load();
