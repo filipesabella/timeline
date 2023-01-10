@@ -67,6 +67,10 @@ export const api = {
       label,
       metadata: metadata || null,
     });
+  },
+
+  update: async (event: Event) => {
+    await supabase.from('timeline_events').update(event);
   }
 };
 

@@ -11,31 +11,57 @@ export const Stats = () => {
     api.loadEvents().then(setEvents);
   }, []);
 
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [editedEvent, setEditedEvent] = useState('');
+
+  const save = async () => {
+    const e = JSON.parse(editedEvent);
+    await api.update(e)
+    setSelectedEvent(null);
+  };
+
   return <div className="stats">
     {!events &&
       <div className="loadingAnimation">{icons.loadingAnimation}</div>}
     {events && <table>
       <tbody>
-        {[...events].sort(() => 1).map(Event)}
+        {[...events].sort(() => 1).map(EventComponent(setSelectedEvent))}
       </tbody>
     </table>}
+    {selectedEvent && <div className="edit-dialog">
+      <div className="container">
+        <textarea
+          defaultValue={JSON.stringify(selectedEvent, null, 2)}
+          onChange={e => setEditedEvent(e.target.value)} />
+        <div className="actions">
+          <button className="close"
+            onClick={() => setSelectedEvent(null)}>close</button>
+          <button className="save"
+            onClick={save}>save</button>
+        </div>
+      </div>
+    </div>}
   </div>;
 };
 
-const specificParsers: {[key:string]: (e: Event) => string} = {
+const specificParsers: { [key: string]: (e: Event) => string } = {
   'One time event': (e: Event) => `OTE: ${JSON.parse(e.metadata!).Event}`,
   'exercise': (e: Event) => `Exercise: ${e.metadata}`,
   'food': (e: Event) => `Food: ${e.metadata}`,
 };
 
-const Event = (event: Event) => {
-  const label = event.label;
-  const text = specificParsers[label] ? specificParsers[label](event) : label;
-  return <tr key={event.id}>
-    <td>{text}</td>
-    <td className="date">{formatDate(event.event_date)}</td>
-  </tr>;
-};
+const EventComponent = (setSelectedEvent: (e: Event) => void) =>
+  (event: Event) => {
+    const label = event.label;
+    const text = specificParsers[label] ? specificParsers[label](event) : label;
+    return <tr key={event.id}>
+      <td>{text}</td>
+      <td className="date">{formatDate(event.event_date)}</td>
+      <td className="actions">
+        <button onClick={() => setSelectedEvent(event)}>edit</button>
+      </td>
+    </tr>;
+  };
 
 function formatDate(s: string): string {
   const d = new Date(s);
