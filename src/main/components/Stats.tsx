@@ -48,6 +48,7 @@ const specificParsers: { [key: string]: (e: Event) => string } = {
   'One time event': (e: Event) => `OTE: ${JSON.parse(e.metadata!).Event}`,
   'exercise': (e: Event) => `Exercise: ${e.metadata}`,
   'food': (e: Event) => `Food: ${e.metadata}`,
+  'remedio': (e: Event) => `Remedio: ${e.metadata}`,
 };
 
 const EventComponent = (setSelectedEvent: (e: Event) => void) =>
